@@ -1,0 +1,797 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Health Assessment Report | GeneGuard AI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f3f6fa;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: white;
+            padding: 17px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5eaf1;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: #145b8c;
+        }
+
+        .logo span {
+            color: #16a085;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #168c91;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 40px auto;
+            padding: 0 22px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 30px;
+            color: #172b4d;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .report-header {
+            background: linear-gradient(120deg, #145b8c, #168c91);
+            padding: 32px;
+            color: white;
+            border-radius: 14px;
+            margin-bottom: 24px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .report-header h2 {
+            font-size: 23px;
+            margin-bottom: 9px;
+        }
+
+        .report-header p {
+            color: #e5f5f8;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .overall-status {
+            display: inline-block;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .5px;
+            white-space: nowrap;
+        }
+
+        .overall-status.complete {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .overall-status.incomplete {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .report-meta {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+            margin-top: 24px;
+        }
+
+        .meta-item {
+            background: rgba(255,255,255,.13);
+            padding: 14px 16px;
+            border-radius: 9px;
+        }
+
+        .meta-item span {
+            display: block;
+            color: #dbeafe;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .meta-item strong {
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .section {
+            background: white;
+            padding: 27px;
+            border-radius: 13px;
+            border: 1px solid #e5eaf1;
+            margin-bottom: 22px;
+        }
+
+        .section h2 {
+            color: #1e3a5f;
+            font-size: 19px;
+            margin-bottom: 18px;
+        }
+
+        .section h3 {
+            color: #145b8c;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .section p {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+
+        .result-box {
+            background: #f7fafc;
+            border: 1px solid #e5edf4;
+            border-left: 4px solid #168c91;
+            padding: 17px;
+            border-radius: 8px;
+            margin-bottom: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        .result-box:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 11px 0;
+            border-bottom: 1px solid #e5edf4;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .result-value {
+            color: #1e293b;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: right;
+            overflow-wrap: anywhere;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .status.complete {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status.incomplete {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status.neutral {
+            background: #e0f2fe;
+            color: #075985;
+        }
+
+        .empty {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            padding: 20px;
+            border-radius: 9px;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .count-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            background: #edf7f8;
+            border: 1px solid #d2e9e9;
+            padding: 15px 18px;
+            border-radius: 9px;
+            margin-top: 15px;
+        }
+
+        .count-box span {
+            color: #475569;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .count-box strong {
+            color: #145b8c;
+            font-size: 21px;
+        }
+
+        .recommendation {
+            padding: 18px;
+            border: 1px solid #e5edf4;
+            border-radius: 9px;
+            margin-bottom: 12px;
+            background: #fbfdff;
+        }
+
+        .recommendation:last-child {
+            margin-bottom: 0;
+        }
+
+        .recommendation h3 {
+            color: #145b8c;
+            margin-bottom: 9px;
+        }
+
+        .recommendation p {
+            margin-bottom: 7px;
+        }
+
+        .disclaimer {
+            background: #fff8eb;
+            border: 1px solid #f3d8a5;
+            padding: 23px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+
+        .disclaimer h3 {
+            color: #925d13;
+            margin-bottom: 9px;
+            font-size: 16px;
+        }
+
+        .disclaimer p {
+            color: #795b2b;
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 21px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: .2s;
+        }
+
+        .primary {
+            background: #145b8c;
+            color: white;
+        }
+
+        .secondary {
+            background: #eaf2f8;
+            color: #145b8c;
+        }
+
+        .btn:hover {
+            opacity: .88;
+            transform: translateY(-1px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 30px;
+        }
+
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+
+        @media print {
+            body {
+                background: white;
+                font-size: 11px;
+            }
+
+            .navbar, .actions, footer {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .report-header {
+                border-radius: 5px;
+                padding: 23px;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+
+            .section {
+                border: 1px solid #dce3ea;
+                border-radius: 5px;
+                padding: 20px;
+                margin-bottom: 15px;
+            }
+
+            .result-box,
+            .recommendation,
+            .count-box,
+            .disclaimer {
+                break-inside: avoid;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+
+        @media(max-width: 600px) {
+            .navbar {
+                padding: 16px 5%;
+            }
+
+            .heading h1 {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .section {
+                padding: 19px;
+            }
+
+            .report-header {
+                padding: 23px;
+            }
+
+            .report-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .result-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .result-value {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+{% set family = report.get('family_history', {}) if report is mapping else {} %}
+{% set carrier = report.get('carrier_assessment', {}) if report is mapping else {} %}
+{% set recommendations = report.get('recommendations', []) if report is mapping else [] %}
+{% set findings = family.get('findings', []) if family is mapping else [] %}
+{% set carrier_status = carrier.get('status', 'Not assessed') | string if carrier is mapping else 'Not assessed' %}
+{% set report_status = report.get('status', 'ASSESSMENT INCOMPLETE') if report is mapping else 'ASSESSMENT INCOMPLETE' %}
+{% set is_complete = report_status == 'REPORT GENERATED' %}
+
+<nav class="navbar">
+    <div class="logo">GeneGuard<span>AI</span></div>
+
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <section class="heading">
+        <h1>Health Assessment Report</h1>
+        <p>
+            Review the results generated from your submitted family
+            health history and genetic carrier compatibility assessment.
+        </p>
+    </section>
+
+    <!-- REPORT HEADER -->
+
+    <section class="report-header">
+
+        <div class="header-top">
+            <div>
+                <h2>GeneGuard AI Assessment Summary</h2>
+                <p>
+                    This report organizes your assessment information
+                    to help you understand the submitted findings and
+                    discuss relevant results with a qualified healthcare professional.
+                </p>
+            </div>
+
+            <span class="overall-status {{ 'complete' if is_complete else 'incomplete' }}">
+                {{ report_status }}
+            </span>
+        </div>
+
+        <div class="report-meta">
+
+            <div class="meta-item">
+                <span>Patient Name</span>
+                <strong>
+                    {{ report.get('patient_name', 'Not available') }}
+                </strong>
+            </div>
+
+            <div class="meta-item">
+                <span>Generated At</span>
+                <strong>
+                    {{ report.get('generated_at', 'Not available') }}
+                </strong>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FAMILY HISTORY -->
+
+    <section class="section">
+
+        <h2>1. Family History Assessment</h2>
+
+        {% if family is mapping and family %}
+
+            {% if findings %}
+
+                <h3>Recorded Family History Findings</h3>
+
+                {% for item in findings %}
+
+                    <div class="result-box">
+
+                        {% if item is mapping %}
+
+                            {% for key, value in item.items() %}
+
+                                <div class="result-row">
+
+                                    <span class="result-label">
+                                        {{ key | replace('_', ' ') | title }}
+                                    </span>
+
+                                    <span class="result-value">
+                                        {{ value }}
+                                    </span>
+
+                                </div>
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <p>{{ item }}</p>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty">
+                    No family history findings are available.
+                    This does not establish that there is no hereditary risk.
+                </div>
+
+            {% endif %}
+
+            <div class="count-box">
+                <span>Total Recorded Conditions</span>
+                <strong>
+                    {{ family.get('total_conditions', findings | length) }}
+                </strong>
+            </div>
+
+        {% else %}
+
+            <div class="empty">
+                No family history assessment results are available.
+                Please complete the family history assessment.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    <!-- CARRIER ASSESSMENT -->
+
+    <section class="section">
+
+        <h2>2. Genetic Carrier Compatibility</h2>
+
+        {% if carrier is mapping and carrier %}
+
+            <div class="result-box">
+
+                <div class="result-row">
+
+                    <span class="result-label">
+                        Genetic Condition
+                    </span>
+
+                    <span class="result-value">
+                        {{ carrier.get('condition', 'Not specified') }}
+                    </span>
+
+                </div>
+
+                <div class="result-row">
+
+                    <span class="result-label">
+                        Assessment Status
+                    </span>
+
+                    <span class="result-value">
+
+                        {% if carrier_status == 'Carrier match identified' %}
+
+                            <span class="status incomplete">
+                                Carrier Match Identified
+                            </span>
+
+                        {% elif carrier_status == 'Incomplete' %}
+
+                            <span class="status incomplete">
+                                Incomplete
+                            </span>
+
+                        {% elif carrier_status == 'Not assessed' %}
+
+                            <span class="status neutral">
+                                Not Assessed
+                            </span>
+
+                        {% else %}
+
+                            <span class="status neutral">
+                                {{ carrier_status }}
+                            </span>
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% for key, value in carrier.items() %}
+
+                {% if key not in ['condition', 'status'] %}
+
+                    <div class="result-box">
+
+                        <h3>{{ key | replace('_', ' ') | title }}</h3>
+
+                        {% if value is mapping or value is sequence and value is not string %}
+
+                            <pre style="white-space:pre-wrap;font-size:12px;color:#475569;">{{ value | tojson(indent=2) }}</pre>
+
+                        {% else %}
+
+                            <p>{{ value }}</p>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                No carrier compatibility results are available yet.
+                Complete your carrier assessment to include its results here.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    <!-- RECOMMENDATIONS -->
+
+    <section class="section">
+
+        <h2>3. Recommendations</h2>
+
+        {% if recommendations %}
+
+            {% for item in recommendations %}
+
+                <div class="recommendation">
+
+                    {% if item is mapping %}
+
+                        <h3>
+                            {{ item.get('category', 'General Recommendation') }}
+                        </h3>
+
+                        <p>
+                            <strong>Condition / Area:</strong>
+                            {{ item.get('condition', item.get('area', 'General')) }}
+                        </p>
+
+                        <p>
+                            <strong>Recommended Action:</strong>
+                            {{ item.get('action', item.get('recommended_action', 'Consult a healthcare professional.')) }}
+                        </p>
+
+                    {% else %}
+
+                        <p>{{ item }}</p>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                No additional recommendations are available.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    <!-- REPORT INFORMATION -->
+
+    <section class="section">
+
+        <h2>4. Additional Report Information</h2>
+
+        <div class="result-box">
+
+            <h3>Project</h3>
+            <p>{{ report.get('project', 'GeneGuard AI') }}</p>
+
+        </div>
+
+        <div class="result-box">
+
+            <h3>Report Status</h3>
+            <p>{{ report_status }}</p>
+
+        </div>
+
+    </section>
+
+    <!-- DISCLAIMER -->
+
+    <section class="disclaimer">
+
+        <h3>Important Medical Disclaimer</h3>
+
+        <p>
+            {{ report.get('disclaimer', 'This report is for educational purposes only. It is not a medical diagnosis or a substitute for professional genetic counselling.') }}
+        </p>
+
+        <p>
+            GeneGuard AI provides informational assessment results
+            based on information entered by the user. These results
+            should not be used to make medical or reproductive decisions
+            without consulting a qualified healthcare professional.
+        </p>
+
+    </section>
+
+    <!-- ACTION BUTTONS -->
+
+    <div class="actions">
+
+        <button
+            class="btn primary"
+            onclick="window.print()"
+            type="button">
+            Print / Save as PDF
+        </button>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn secondary">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</main>
+
+<footer>
+    © 2026 GeneGuard AI. All rights reserved.
+</footer>
+
+</body>
+</html>
+
+
+

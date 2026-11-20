@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | GeneGuard AI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: #ffffff;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5eaf1;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: #145b8c;
+        }
+
+        .logo span {
+            color: #16a085;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-right a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .logout {
+            background: #eaf2f8;
+            padding: 10px 17px;
+            border-radius: 8px;
+            color: #145b8c !important;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 45px auto;
+            padding: 0 22px;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: #172b4d;
+        }
+
+        .welcome p {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .welcome strong {
+            color: #145b8c;
+        }
+
+        .status-card {
+            background: linear-gradient(120deg, #145b8c, #168c91);
+            color: white;
+            padding: 28px;
+            border-radius: 15px;
+            margin-bottom: 35px;
+        }
+
+        .status-card h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .status-card p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #e5f5f8;
+        }
+
+        .section-title {
+            font-size: 21px;
+            margin-bottom: 20px;
+            color: #172b4d;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 13px;
+            border: 1px solid #e5eaf1;
+            transition: 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(15, 40, 70, 0.08);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #eaf4fa;
+            font-size: 23px;
+            margin-bottom: 17px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #1e3a5f;
+        }
+
+        .card p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+            min-height: 48px;
+            margin-bottom: 20px;
+        }
+
+        .card a {
+            display: inline-block;
+            text-decoration: none;
+            background: #145b8c;
+            color: white;
+            padding: 11px 17px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .card a:hover {
+            background: #0e456d;
+        }
+
+        .report-section {
+            margin-top: 35px;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 13px;
+            border: 1px solid #e5eaf1;
+        }
+
+        .report-section h2 {
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .report-section p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 17px;
+        }
+
+        .report-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #168c80;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error, .warning {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                padding: 16px 5%;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .nav-right {
+                gap: 12px;
+            }
+
+            .container {
+                margin-top: 30px;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+
+        <div class="logo">
+            GeneGuard<span>AI</span>
+        </div>
+
+        <div class="nav-right">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+        <!-- FLASH MESSAGES -->
+        <div class="messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endwith %}
+        </div>
+
+
+        <!-- WELCOME SECTION -->
+        <section class="welcome">
+
+            <h1>
+                Welcome, {{ name }}!
+            </h1>
+
+            <p>
+                Welcome to your GeneGuard AI dashboard.
+                Explore your family health history, genetic carrier
+                compatibility and personalized assessment reports.
+            </p>
+
+        </section>
+
+
+        <!-- INTRODUCTION -->
+        <section class="status-card">
+
+            <h2>Your Health Assessment Workspace</h2>
+
+            <p>
+                GeneGuard AI helps you organize family health history
+                and explore genetic carrier compatibility information.
+                Complete the assessments below to view your results.
+                These results are informational and are not a substitute
+                for professional medical or genetic counselling.
+            </p>
+
+        </section>
+
+
+        <!-- ASSESSMENT OPTIONS -->
+        <h2 class="section-title">Your Assessments</h2>
+
+        <section class="cards">
+
+            <!-- FAMILY HISTORY -->
+            <div class="card">
+
+                <div class="card-icon">👨‍👩‍👧‍👦</div>
+
+                <h3>Family History Assessment</h3>
+
+                <p>
+                    Enter relevant family health history and explore
+                    possible inherited health patterns.
+                </p>
+
+                <a href="{{ url_for('family_history') }}">
+                    Start Assessment →
+                </a>
+
+            </div>
+
+
+            <!-- FAMILY TREE -->
+            <div class="card">
+
+                <div class="card-icon">🌳</div>
+
+                <h3>Family Health Tree</h3>
+
+                <p>
+                    View the family history information you have
+                    submitted and explore its assessment findings.
+                </p>
+
+                <a href="{{ url_for('family_tree') }}">
+                    View Family Tree →
+                </a>
+
+            </div>
+
+
+            <!-- CARRIER COMPATIBILITY -->
+            <div class="card">
+
+                <div class="card-icon">🧬</div>
+
+                <h3>Carrier Compatibility</h3>
+
+                <p>
+                    Enter genetic carrier test results for two
+                    individuals to explore compatibility information.
+                </p>
+
+                <a href="{{ url_for('carrier_assessment') }}">
+                    Check Compatibility →
+                </a>
+
+            </div>
+
+
+            <!-- HEALTH REPORT -->
+            <div class="card">
+
+                <div class="card-icon">📊</div>
+
+                <h3>Health Assessment Report</h3>
+
+                <p>
+                    View your combined family history and carrier
+                    compatibility assessment report.
+                </p>
+
+                <a href="{{ url_for('health_report') }}">
+                    View Report →
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- REPORT SECTION -->
+        <section class="report-section">
+
+            <h2>Assessment Summary</h2>
+
+            {% if report %}
+
+                <p>
+                    Your latest assessment report is available.
+                    Open it to review your assessment information.
+                </p>
+
+            {% else %}
+
+                <p>
+                    You have not generated a report yet.
+                    Complete your assessments to generate your report.
+                </p>
+
+            {% endif %}
+
+            <a href="{{ url_for('health_report') }}" class="report-btn">
+                Open Health Report →
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+        © 2026 GeneGuard AI. All rights reserved.
+    </footer>
+
+</body>
+</html>

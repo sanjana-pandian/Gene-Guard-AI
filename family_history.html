@@ -1,0 +1,819 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Family Health History | GeneGuard AI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f3f6fa;
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5eaf1;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: #145b8c;
+        }
+
+        .logo span {
+            color: #16a085;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #168c91;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 22px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 29px;
+            color: #172b4d;
+            margin-bottom: 9px;
+        }
+
+        .heading p {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .progress-section {
+            background: white;
+            padding: 20px 24px;
+            border: 1px solid #e5eaf1;
+            border-radius: 12px;
+            margin-bottom: 22px;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .progress-bar {
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, #145b8c, #16a085);
+            border-radius: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 13px;
+            border: 1px solid #e5eaf1;
+            margin-bottom: 22px;
+        }
+
+        .card h2 {
+            font-size: 19px;
+            color: #1e3a5f;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 22px;
+        }
+
+        .info-box {
+            background: #eff8fc;
+            border: 1px solid #d4eaf3;
+            border-left: 4px solid #168c91;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 22px;
+        }
+
+        .info-box strong {
+            display: block;
+            color: #145b8c;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .info-box p {
+            color: #52677b;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .member-card {
+            background: #fbfdff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .member-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 17px;
+        }
+
+        .member-top h3 {
+            color: #145b8c;
+            font-size: 14px;
+        }
+
+        .remove-btn {
+            border: none;
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            background: #fecaca;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 17px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #475569;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dce3ec;
+            border-radius: 7px;
+            outline: none;
+            font-family: inherit;
+            font-size: 12px;
+            background: white;
+            color: #1e293b;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #168c91;
+            box-shadow: 0 0 0 3px rgba(22,140,145,.1);
+        }
+
+        .form-group input::placeholder {
+            color: #94a3b8;
+        }
+
+        .add-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eaf5f7;
+            color: #145b8c;
+            border: 1px solid #cce5e9;
+            padding: 12px 17px;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .add-btn:hover {
+            background: #dceff1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 28px 15px;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 9px;
+            margin-bottom: 17px;
+        }
+
+        .empty-state h3 {
+            color: #475569;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .consent-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            background: #f8fafc;
+            padding: 17px;
+            border: 1px solid #e2e8f0;
+            border-radius: 9px;
+            margin-top: 20px;
+        }
+
+        .consent-box input {
+            margin-top: 3px;
+            accent-color: #168c91;
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+        }
+
+        .consent-box label {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.8;
+            cursor: pointer;
+        }
+
+        .privacy-note {
+            margin-top: 13px;
+            color: #94a3b8;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 13px 21px;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .primary {
+            background: #145b8c;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #104b73;
+        }
+
+        .secondary {
+            background: #eaf2f8;
+            color: #145b8c;
+        }
+
+        .secondary:hover {
+            background: #dce9f3;
+        }
+
+        .disclaimer {
+            background: #fff8eb;
+            border: 1px solid #f3d8a5;
+            padding: 18px;
+            border-radius: 9px;
+            margin-top: 22px;
+        }
+
+        .disclaimer h3 {
+            font-size: 13px;
+            color: #925d13;
+            margin-bottom: 7px;
+        }
+
+        .disclaimer p {
+            font-size: 11px;
+            color: #795b2b;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 30px;
+        }
+
+        @media(max-width: 750px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                margin-top: 25px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+
+        @media(max-width: 500px) {
+            .navbar {
+                padding: 16px 5%;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .heading h1 {
+                font-size: 24px;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .actions .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        GeneGuard<span>AI</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+</nav>
+
+<main class="container">
+
+    <section class="heading">
+
+        <h1>Family Health History</h1>
+
+        <p>
+            Provide information about health conditions in your family.
+            This information helps organize family health patterns
+            for your GeneGuard AI assessment.
+        </p>
+
+    </section>
+
+    <section class="progress-section">
+
+        <div class="progress-top">
+            <span>Assessment Progress</span>
+            <span>Step 2 of 4</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+    </section>
+
+    <form action="{{ url_for('family_history') }}" method="POST" id="familyForm">
+
+        <section class="card">
+
+            <h2>Family Medical Information</h2>
+
+            <p class="card-description">
+                Add family members who have a known history of medical
+                conditions. Enter only information you know or have
+                been informed about.
+            </p>
+
+            <div class="info-box">
+
+                <strong>Why is family history important?</strong>
+
+                <p>
+                    Family health history can help healthcare
+                    professionals understand possible inherited
+                    health patterns. It does not independently
+                    determine whether someone will develop a condition.
+                </p>
+
+            </div>
+
+            <div id="membersContainer">
+
+                <div class="member-card">
+
+                    <div class="member-top">
+
+                        <h3>Family Member 1</h3>
+
+                        <button
+                            type="button"
+                            class="remove-btn"
+                            onclick="removeMember(this)"
+                            style="display:none;">
+
+                            Remove
+
+                        </button>
+
+                    </div>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Family Relationship</label>
+
+                            <select name="member[]" required>
+
+                                <option value="">Select relationship</option>
+                                <option value="Father">Father</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Brother">Brother</option>
+                                <option value="Sister">Sister</option>
+                                <option value="Grandfather">Grandfather</option>
+                                <option value="Grandmother">Grandmother</option>
+                                <option value="Uncle">Uncle</option>
+                                <option value="Aunt">Aunt</option>
+                                <option value="Cousin">Cousin</option>
+                                <option value="Other">Other</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Health Condition</label>
+
+                            <input
+                                type="text"
+                                name="condition[]"
+                                placeholder="Example: Diabetes"
+                                maxlength="100"
+                                required>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Family Generation</label>
+
+                            <select name="generation[]" required>
+
+                                <option value="">Select generation</option>
+                                <option value="First Generation">First Generation</option>
+                                <option value="Second Generation">Second Generation</option>
+                                <option value="Third Generation">Third Generation</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                class="add-btn"
+                onclick="addMember()">
+
+                <span>+</span>
+                Add Another Family Member
+
+            </button>
+
+            <p class="privacy-note">
+                You can add up to 30 family history records.
+                Avoid entering unnecessary personal identifying information.
+            </p>
+
+        </section>
+
+        <section class="card">
+
+            <h2>Information Storage Consent</h2>
+
+            <p class="card-description">
+                Choose whether you consent to saving your submitted
+                family history assessment in the application's database.
+            </p>
+
+            <div class="consent-box">
+
+                <input
+                    type="checkbox"
+                    id="saveConsent"
+                    name="save_consent"
+                    value="yes">
+
+                <label for="saveConsent">
+
+                    I consent to saving my submitted family health
+                    history assessment information in GeneGuard AI
+                    for future reference.
+
+                </label>
+
+            </div>
+
+            <p class="privacy-note">
+                Consent is optional. Leaving this unchecked will not
+                submit the consent value.
+            </p>
+
+        </section>
+
+        <div class="actions">
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="btn secondary">
+
+                Back to Dashboard
+
+            </a>
+
+            <button
+                type="submit"
+                class="btn primary">
+
+                Submit Family History →
+
+            </button>
+
+        </div>
+
+    </form>
+
+    <section class="disclaimer">
+
+        <h3>Medical Information Disclaimer</h3>
+
+        <p>
+            The information entered is intended for educational
+            assessment purposes. Family history alone cannot
+            diagnose a genetic condition or establish an individual's
+            carrier status. Consult a qualified healthcare
+            professional or genetic counsellor for medical advice.
+        </p>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 GeneGuard AI. All rights reserved.
+</footer>
+
+<script>
+
+    let memberCount = 1;
+
+    const MAX_MEMBERS = 30;
+
+    function updateMemberNumbers() {
+
+        const cards = document.querySelectorAll('.member-card');
+
+        cards.forEach((card, index) => {
+
+            card.querySelector('h3').textContent =
+                'Family Member ' + (index + 1);
+
+            const removeButton = card.querySelector('.remove-btn');
+
+            removeButton.style.display =
+                cards.length > 1 ? 'inline-block' : 'none';
+
+        });
+
+        memberCount = cards.length;
+
+        const addButton = document.querySelector('.add-btn');
+
+        addButton.disabled = memberCount >= MAX_MEMBERS;
+
+        addButton.style.opacity =
+            memberCount >= MAX_MEMBERS ? '0.5' : '1';
+
+        addButton.style.cursor =
+            memberCount >= MAX_MEMBERS ? 'not-allowed' : 'pointer';
+
+    }
+
+    function addMember() {
+
+        const container = document.getElementById('membersContainer');
+
+        if (container.children.length >= MAX_MEMBERS) {
+
+            alert('You can add a maximum of 30 family members.');
+
+            return;
+
+        }
+
+        const newCard = document.createElement('div');
+
+        newCard.className = 'member-card';
+
+        newCard.innerHTML = `
+
+            <div class="member-top">
+
+                <h3>Family Member</h3>
+
+                <button
+                    type="button"
+                    class="remove-btn"
+                    onclick="removeMember(this)">
+
+                    Remove
+
+                </button>
+
+            </div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>Family Relationship</label>
+
+                    <select name="member[]" required>
+
+                        <option value="">Select relationship</option>
+                        <option value="Father">Father</option>
+                        <option value="Mother">Mother</option>
+                        <option value="Brother">Brother</option>
+                        <option value="Sister">Sister</option>
+                        <option value="Grandfather">Grandfather</option>
+                        <option value="Grandmother">Grandmother</option>
+                        <option value="Uncle">Uncle</option>
+                        <option value="Aunt">Aunt</option>
+                        <option value="Cousin">Cousin</option>
+                        <option value="Other">Other</option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Health Condition</label>
+
+                    <input
+                        type="text"
+                        name="condition[]"
+                        placeholder="Example: Diabetes"
+                        maxlength="100"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Family Generation</label>
+
+                    <select name="generation[]" required>
+
+                        <option value="">Select generation</option>
+                        <option value="First Generation">First Generation</option>
+                        <option value="Second Generation">Second Generation</option>
+                        <option value="Third Generation">Third Generation</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        `;
+
+        container.appendChild(newCard);
+
+        updateMemberNumbers();
+
+    }
+
+    function removeMember(button) {
+
+        const container = document.getElementById('membersContainer');
+
+        if (container.children.length <= 1) {
+
+            alert('At least one family member entry must remain.');
+
+            return;
+
+        }
+
+        button.closest('.member-card').remove();
+
+        updateMemberNumbers();
+
+    }
+
+    document.getElementById('familyForm').addEventListener('submit', function(event) {
+
+        const cards = document.querySelectorAll('.member-card');
+
+        if (cards.length > MAX_MEMBERS) {
+
+            event.preventDefault();
+
+            alert('Maximum 30 family history records are allowed.');
+
+            return;
+
+        }
+
+    });
+
+    updateMemberNumbers();
+
+</script>
+
+</body>
+</html>

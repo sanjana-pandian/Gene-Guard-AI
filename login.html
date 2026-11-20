@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | GeneGuard AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .auth-section {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            background: #f4f9f8;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 440px;
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        }
+
+        .auth-card h1 {
+            text-align: center;
+            color: #123b3b;
+            margin-bottom: 10px;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: #718080;
+            margin-bottom: 30px;
+        }
+
+        .auth-form label {
+            display: block;
+            margin: 18px 0 7px;
+            font-weight: 600;
+            color: #294646;
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d6e2df;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        .auth-form input:focus {
+            outline: none;
+            border-color: #159b88;
+            box-shadow: 0 0 0 3px rgba(21,155,136,0.1);
+        }
+
+        .auth-button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #159b88;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .auth-button:hover {
+            background: #107968;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 22px;
+            color: #718080;
+        }
+
+        .auth-footer a {
+            color: #159b88;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .flash-message {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 7px;
+            background: #fff0f0;
+            color: #a52a2a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="auth-section">
+        <div class="auth-card">
+
+            <h1>Welcome Back</h1>
+            <p class="auth-subtitle">
+                Login to continue to GeneGuard AI.
+            </p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form class="auth-form" action="{{ url_for('login') }}" method="POST">
+
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button type="submit" class="auth-button">
+                    Login
+                </button>
+
+            </form>
+
+            <p class="auth-footer">
+                Don't have an account?
+                <a href="{{ url_for('register') }}">Create Account</a>
+            </p>
+
+        </div>
+    </section>
+
+</body>
+</html>

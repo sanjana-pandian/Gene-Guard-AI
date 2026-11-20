@@ -1,0 +1,824 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genetic Carrier Assessment | GeneGuard AI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+            min-height: 100vh;
+            padding: 35px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1050px;
+            margin: auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #172554, #1e40af);
+            color: white;
+            padding: 38px;
+            border-radius: 17px;
+            margin-bottom: 25px;
+        }
+
+        .hero-label {
+            display: inline-block;
+            background: rgba(255,255,255,.14);
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .7px;
+            margin-bottom: 17px;
+        }
+
+        .hero h1 {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 13px;
+        }
+
+        .hero p {
+            max-width: 750px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #dbeafe;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .info-card {
+            background: white;
+            border: 1px solid #e5eaf2;
+            border-radius: 12px;
+            padding: 21px;
+        }
+
+        .info-icon {
+            width: 39px;
+            height: 39px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 19px;
+            margin-bottom: 13px;
+        }
+
+        .info-card h3 {
+            font-size: 14px;
+            color: #172554;
+            margin-bottom: 9px;
+        }
+
+        .info-card p {
+            font-size: 12px;
+            line-height: 1.7;
+            color: #64748b;
+        }
+
+        .section-card {
+            background: white;
+            border: 1px solid #e5eaf2;
+            border-radius: 14px;
+            padding: 29px;
+            margin-bottom: 23px;
+            box-shadow: 0 5px 20px rgba(15,23,42,.035);
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 23px;
+        }
+
+        .section-number {
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 9px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .section-heading h2 {
+            font-size: 18px;
+            color: #172554;
+            margin-bottom: 7px;
+        }
+
+        .section-heading p {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            margin-bottom: 19px;
+        }
+
+        .field:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 9px;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            height: 47px;
+            padding: 0 14px;
+            border: 1px solid #dce3ed;
+            border-radius: 8px;
+            background: #fff;
+            color: #334155;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            transition: .2s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,.10);
+        }
+
+        .field-help {
+            color: #94a3b8;
+            font-size: 11px;
+            line-height: 1.6;
+            margin-top: 7px;
+        }
+
+        .people-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+            align-items: stretch;
+        }
+
+        .person-card {
+            background: #f8faff;
+            border: 1px solid #dfe7f2;
+            border-radius: 13px;
+            padding: 24px;
+        }
+
+        .person-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding-bottom: 19px;
+            margin-bottom: 21px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .person-icon {
+            width: 43px;
+            height: 43px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 19px;
+        }
+
+        .person-header h3 {
+            color: #172554;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .person-header p {
+            color: #64748b;
+            font-size: 11px;
+        }
+
+        .status-guide {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 19px;
+            margin-top: 20px;
+        }
+
+        .status-guide h3 {
+            font-size: 14px;
+            color: #172554;
+            margin-bottom: 13px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .status-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            flex-shrink: 0;
+            margin-top: 5px;
+            border-radius: 50%;
+            background: #3b82f6;
+        }
+
+        .status-item strong {
+            display: block;
+            color: #334155;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .status-item p {
+            color: #64748b;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .notice {
+            display: flex;
+            gap: 13px;
+            padding: 18px;
+            border-radius: 10px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            margin-bottom: 22px;
+        }
+
+        .notice-icon {
+            font-size: 19px;
+            flex-shrink: 0;
+        }
+
+        .notice h3 {
+            font-size: 13px;
+            color: #1e40af;
+            margin-bottom: 6px;
+        }
+
+        .notice p {
+            font-size: 12px;
+            line-height: 1.7;
+            color: #475569;
+        }
+
+        .consent {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .consent input {
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            accent-color: #2563eb;
+        }
+
+        .consent span {
+            color: #475569;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .disclaimer {
+            margin-top: 20px;
+            padding-top: 17px;
+            border-top: 1px solid #e9edf3;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .submit-btn {
+            width: 100%;
+            height: 53px;
+            border: none;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .flash {
+            padding: 14px 17px;
+            border-radius: 9px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            background: #fff1f2;
+            color: #be123c;
+        }
+
+        .flash.success {
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+        .flash.warning {
+            background: #fffbeb;
+            color: #b45309;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 11px;
+            line-height: 1.7;
+            margin-top: 24px;
+        }
+
+        @media(max-width: 760px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .people-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 550px) {
+            body {
+                padding: 22px 13px;
+            }
+
+            .hero {
+                padding: 25px 21px;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .section-card {
+                padding: 20px;
+            }
+
+            .person-card {
+                padding: 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="{{ url_for('dashboard') }}" class="back-link">
+        ← Back to Dashboard
+    </a>
+
+    <!-- INTRODUCTION -->
+
+    <section class="hero">
+        <span class="hero-label">GENETIC HEALTH ASSESSMENT</span>
+
+        <h1>Genetic Carrier Compatibility</h1>
+
+        <p>
+            Understand the carrier status of two individuals for a
+            selected genetic condition. This assessment collects
+            reported genetic test information and provides a starting
+            point for understanding possible inherited health risks.
+            Enter accurate information for both individuals before
+            submitting the assessment.
+        </p>
+    </section>
+
+    <!-- INFORMATION CARDS -->
+
+    <div class="info-grid">
+
+        <div class="info-card">
+            <div class="info-icon">🧬</div>
+            <h3>What is Carrier Screening?</h3>
+            <p>
+                Carrier screening is a type of genetic testing that
+                checks whether a person carries a genetic variant
+                associated with a particular inherited condition.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-icon">👥</div>
+            <h3>Why Assess Two Individuals?</h3>
+            <p>
+                Reviewing both individuals' test results can help
+                identify situations that may require further genetic
+                counselling or clinical evaluation.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-icon">🛡️</div>
+            <h3>Informed Health Decisions</h3>
+            <p>
+                Accurate genetic information can support informed
+                discussions with qualified healthcare professionals
+                about inherited conditions.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- FLASH MESSAGES -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('carrier_assessment') }}">
+
+        <!-- SECTION 1 -->
+
+        <section class="section-card">
+
+            <div class="section-heading">
+                <div class="section-number">01</div>
+
+                <div>
+                    <h2>Genetic Condition Information</h2>
+                    <p>
+                        Specify the inherited condition for which
+                        the carrier compatibility assessment is being performed.
+                    </p>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="condition">
+                    Name of Genetic Condition <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="condition"
+                    name="condition"
+                    placeholder="Example: Thalassemia, Sickle Cell Disease"
+                    maxlength="100"
+                    required
+                >
+
+                <p class="field-help">
+                    Enter the specific genetic condition being evaluated.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- SECTION 2 -->
+
+        <section class="section-card">
+
+            <div class="section-heading">
+                <div class="section-number">02</div>
+
+                <div>
+                    <h2>Individual Genetic Test Information</h2>
+                    <p>
+                        Provide the genetic test status and confirmation
+                        details for both individuals.
+                    </p>
+                </div>
+            </div>
+
+            <div class="people-grid">
+
+                <!-- INDIVIDUAL A -->
+
+                <div class="person-card">
+
+                    <div class="person-header">
+                        <div class="person-icon">A</div>
+
+                        <div>
+                            <h3>Individual A</h3>
+                            <p>First individual's test information</p>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="status_a">
+                            Genetic Test Status <span class="required">*</span>
+                        </label>
+
+                        <select id="status_a" name="status_a" required>
+                            <option value="">Select test status</option>
+                            <option value="carrier">Carrier</option>
+                            <option value="not_carrier">Not a Carrier</option>
+                            <option value="affected">Affected</option>
+                        </select>
+
+                        <p class="field-help">
+                            Select the result reported in the individual's
+                            genetic test.
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <label for="confirmed_a">
+                            Is the Result Confirmed by a Genetic Test?
+                            <span class="required">*</span>
+                        </label>
+
+                        <select id="confirmed_a" name="confirmed_a" required>
+                            <option value="">Select confirmation status</option>
+                            <option value="yes">Yes, confirmed</option>
+                            <option value="no">No, not confirmed</option>
+                        </select>
+
+                        <p class="field-help">
+                            Confirm whether the selected status is supported
+                            by an actual genetic test result.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- INDIVIDUAL B -->
+
+                <div class="person-card">
+
+                    <div class="person-header">
+                        <div class="person-icon">B</div>
+
+                        <div>
+                            <h3>Individual B</h3>
+                            <p>Second individual's test information</p>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="status_b">
+                            Genetic Test Status <span class="required">*</span>
+                        </label>
+
+                        <select id="status_b" name="status_b" required>
+                            <option value="">Select test status</option>
+                            <option value="carrier">Carrier</option>
+                            <option value="not_carrier">Not a Carrier</option>
+                            <option value="affected">Affected</option>
+                        </select>
+
+                        <p class="field-help">
+                            Select the result reported in the individual's
+                            genetic test.
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <label for="confirmed_b">
+                            Is the Result Confirmed by a Genetic Test?
+                            <span class="required">*</span>
+                        </label>
+
+                        <select id="confirmed_b" name="confirmed_b" required>
+                            <option value="">Select confirmation status</option>
+                            <option value="yes">Yes, confirmed</option>
+                            <option value="no">No, not confirmed</option>
+                        </select>
+
+                        <p class="field-help">
+                            Confirm whether the selected status is supported
+                            by an actual genetic test result.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- STATUS EXPLANATION -->
+
+            <div class="status-guide">
+
+                <h3>Understanding the Genetic Test Status</h3>
+
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <div>
+                        <strong>Carrier</strong>
+                        <p>
+                            The individual has a genetic variant associated
+                            with the selected inherited condition but may
+                            not show symptoms of that condition.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <div>
+                        <strong>Not a Carrier</strong>
+                        <p>
+                            The test did not identify the relevant carrier
+                            status being assessed. The meaning of a negative
+                            result depends on the test and its limitations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <div>
+                        <strong>Affected</strong>
+                        <p>
+                            The individual has been identified as having
+                            the genetic condition. Clinical confirmation
+                            and professional interpretation are important.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SECTION 3 -->
+
+        <section class="section-card">
+
+            <div class="section-heading">
+                <div class="section-number">03</div>
+
+                <div>
+                    <h2>Understanding the Assessment</h2>
+                    <p>
+                        Important information about interpreting
+                        the details entered in this form.
+                    </p>
+                </div>
+            </div>
+
+            <div class="notice">
+                <div class="notice-icon">ℹ️</div>
+
+                <div>
+                    <h3>Why are both test results important?</h3>
+                    <p>
+                        The genetic status of both individuals may be
+                        relevant when evaluating certain inherited
+                        conditions. The interpretation depends on the
+                        specific condition, the inheritance pattern,
+                        and the exact genetic variants involved.
+                    </p>
+                </div>
+            </div>
+
+            <div class="notice">
+                <div class="notice-icon">🔬</div>
+
+                <div>
+                    <h3>Importance of confirmed test results</h3>
+                    <p>
+                        Results based only on assumptions or family
+                        history should not be treated as confirmed
+                        genetic test results. A qualified healthcare
+                        professional or genetic counsellor can help
+                        interpret laboratory reports.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SECTION 4 -->
+
+        <section class="section-card">
+
+            <div class="section-heading">
+                <div class="section-number">04</div>
+
+                <div>
+                    <h2>Data Storage Permission</h2>
+                    <p>
+                        Choose whether you consent to saving
+                        this assessment in your account.
+                    </p>
+                </div>
+            </div>
+
+            <label class="consent">
+                <input
+                    type="checkbox"
+                    name="save_consent"
+                    value="yes"
+                >
+
+                <span>
+                    I consent to saving this genetic carrier assessment
+                    in my account for future reference. I understand
+                    that this is optional.
+                </span>
+            </label>
+
+            <p class="disclaimer">
+                <strong>Medical Disclaimer:</strong>
+                GeneGuard AI provides informational assessment support.
+                This form does not establish a medical diagnosis, determine
+                an individual's complete genetic status, or replace
+                laboratory testing, genetic counselling or professional
+                medical advice. Actual inherited-condition risks require
+                interpretation by qualified healthcare professionals.
+            </p>
+
+        </section>
+
+        <!-- SUBMIT -->
+
+        <button type="submit" class="submit-btn">
+            Evaluate Carrier Compatibility →
+        </button>
+
+    </form>
+
+    <p class="footer-note">
+        GeneGuard AI | Genetic Health Assessment Platform<br>
+        Your information should be entered accurately and handled responsibly.
+    </p>
+
+</div>
+
+</body>
+</html>
+

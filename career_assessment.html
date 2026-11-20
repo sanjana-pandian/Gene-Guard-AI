@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career & Health Assessment | GeneGuard AI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f3f6fb;
+            color: #1e293b;
+            min-height: 100vh;
+            padding: 35px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 22px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            color: #172554;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5eaf2;
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #172554;
+            margin-bottom: 23px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 9px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #dce3ed;
+            border-radius: 8px;
+            background: #fff;
+            color: #334155;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input,
+        select {
+            height: 46px;
+            padding: 0 13px;
+        }
+
+        textarea {
+            min-height: 95px;
+            padding: 13px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .consent {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            cursor: pointer;
+        }
+
+        .consent input {
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            accent-color: #2563eb;
+        }
+
+        .consent span {
+            font-size: 13px;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .note {
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid #e9edf3;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .submit-btn {
+            width: 100%;
+            height: 50px;
+            border: none;
+            border-radius: 9px;
+            background: #2563eb;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .flash {
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            background: #fff1f2;
+            color: #be123c;
+        }
+
+        .flash.success {
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+        .flash.warning {
+            background: #fffbeb;
+            color: #b45309;
+        }
+
+        .result-card {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 22px;
+        }
+
+        .result-card h2 {
+            color: #1e40af;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .result-card pre {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            font-family: inherit;
+            font-size: 13px;
+            line-height: 1.7;
+            color: #334155;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 24px 14px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="{{ url_for('dashboard') }}" class="back-link">
+        ← Back to Dashboard
+    </a>
+
+    <div class="header">
+        <h1>Career & Health Assessment</h1>
+        <p class="subtitle">
+            Share your lifestyle, health background and daily habits
+            to receive a personalized informational assessment.
+        </p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    {% if assessment_result %}
+        <div class="result-card">
+            <h2>Your Assessment Result</h2>
+            <pre>{{ assessment_result | tojson(indent=2) }}</pre>
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('career_assessment') }}">
+
+        <!-- PERSONAL INFORMATION -->
+        <div class="card">
+
+            <h2 class="section-title">Personal Information</h2>
+
+            <div class="grid">
+
+                <div class="field">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age"
+                           min="1" max="120" placeholder="Enter your age"
+                           required>
+                </div>
+
+                <div class="field">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="occupation">Occupation</label>
+                    <select id="occupation" name="occupation" required>
+                        <option value="">Select occupation</option>
+                        <option value="Student">Student</option>
+                        <option value="Working Professional">Working Professional</option>
+                        <option value="Self Employed">Self Employed</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="activity">Physical Activity Level</label>
+                    <select id="activity" name="activity" required>
+                        <option value="">Select activity level</option>
+                        <option value="Low">Low</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- HEALTH BACKGROUND -->
+        <div class="card">
+
+            <h2 class="section-title">Health Background</h2>
+
+            <div class="grid">
+
+                <div class="field full">
+                    <label for="medical_history">Existing Medical History</label>
+                    <textarea id="medical_history" name="medical_history"
+                              maxlength="2000"
+                              placeholder="Mention any relevant existing medical conditions..."></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="family_history">Family History of Health Conditions</label>
+                    <select id="family_history" name="family_history" required>
+                        <option value="">Select an option</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="Unknown">Unknown</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="fatigue">How Often Do You Experience Fatigue?</label>
+                    <select id="fatigue" name="fatigue" required>
+                        <option value="">Select frequency</option>
+                        <option value="Rarely">Rarely</option>
+                        <option value="Sometimes">Sometimes</option>
+                        <option value="Frequently">Frequently</option>
+                        <option value="Almost Daily">Almost Daily</option>
+                    </select>
+                </div>
+
+                <div class="field full">
+                    <label for="family_conditions">Family Health Conditions</label>
+                    <textarea id="family_conditions" name="family_conditions"
+                              maxlength="2000"
+                              placeholder="Mention relevant family health conditions, if any..."></textarea>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- LIFESTYLE -->
+        <div class="card">
+
+            <h2 class="section-title">Lifestyle & Daily Habits</h2>
+
+            <div class="grid">
+
+                <div class="field">
+                    <label for="sleep">Average Sleep Duration</label>
+                    <select id="sleep" name="sleep" required>
+                        <option value="">Select sleep duration</option>
+                        <option value="Less than 5 hours">Less than 5 hours</option>
+                        <option value="5-7 hours">5-7 hours</option>
+                        <option value="7-9 hours">7-9 hours</option>
+                        <option value="More than 9 hours">More than 9 hours</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="stress">Stress Level</label>
+                    <select id="stress" name="stress" required>
+                        <option value="">Select stress level</option>
+                        <option value="Low">Low</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="exercise">Exercise Frequency</label>
+                    <select id="exercise" name="exercise" required>
+                        <option value="">Select frequency</option>
+                        <option value="Daily">Daily</option>
+                        <option value="3-4 times a week">3-4 times a week</option>
+                        <option value="Occasionally">Occasionally</option>
+                        <option value="Never">Never</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="diet">Diet Pattern</label>
+                    <select id="diet" name="diet" required>
+                        <option value="">Select diet pattern</option>
+                        <option value="Balanced">Balanced</option>
+                        <option value="Mostly Healthy">Mostly Healthy</option>
+                        <option value="Irregular">Irregular</option>
+                        <option value="Unhealthy">Unhealthy</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="checkup">Medical Check-up Frequency</label>
+                    <select id="checkup" name="checkup" required>
+                        <option value="">Select frequency</option>
+                        <option value="Regularly">Regularly</option>
+                        <option value="Once a year">Once a year</option>
+                        <option value="Only when needed">Only when needed</option>
+                        <option value="Never">Never</option>
+                    </select>
+                </div>
+
+                <div class="field full">
+                    <label for="additional_info">Additional Information</label>
+                    <textarea id="additional_info" name="additional_info"
+                              maxlength="2000"
+                              placeholder="Add any other relevant information (optional)..."></textarea>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CONSENT -->
+        <div class="card">
+
+            <h2 class="section-title">Data Storage Permission</h2>
+
+            <label class="consent">
+                <input type="checkbox" name="save_consent" value="yes">
+                <span>
+                    I consent to saving this assessment in my account
+                    for future reference. If unchecked, it will not be
+                    permanently saved to my account.
+                </span>
+            </label>
+
+            <p class="note">
+                This assessment is informational only. It is not a medical
+                diagnosis and does not replace professional medical advice,
+                clinical testing or consultation with a healthcare professional.
+            </p>
+
+        </div>
+
+        <button type="submit" class="submit-btn">
+            Submit Assessment →
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
+
+ 

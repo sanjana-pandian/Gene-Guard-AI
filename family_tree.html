@@ -1,0 +1,928 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Family Health Tree | GeneGuard AI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5eaf1;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: #145b8c;
+        }
+
+        .logo span {
+            color: #16a085;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #168c91;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 22px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 29px;
+            color: #172b4d;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .intro {
+            background: linear-gradient(120deg, #145b8c, #168c91);
+            padding: 28px;
+            border-radius: 14px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .intro h2 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+            font-size: 14px;
+            color: #e5f5f8;
+            line-height: 1.8;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border: 1px solid #e5eaf1;
+            border-radius: 13px;
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            font-size: 19px;
+            color: #1e3a5f;
+            margin-bottom: 20px;
+        }
+
+        /* FAMILY TREE */
+
+        .tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tree-node {
+            width: 100%;
+            max-width: 480px;
+            padding: 18px;
+            background: #f0f7fb;
+            border: 1px solid #d6e8f2;
+            border-radius: 10px;
+            text-align: center;
+            overflow-wrap: anywhere;
+        }
+
+        .tree-node.current {
+            background: #e7f7f2;
+            border-color: #a7dfca;
+        }
+
+        .tree-node h3 {
+            font-size: 15px;
+            color: #145b8c;
+            margin-bottom: 7px;
+        }
+
+        .tree-node p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .connector {
+            width: 2px;
+            height: 22px;
+            background: #a5bdca;
+        }
+
+        /* FAMILY RECORDS */
+
+        .records {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .record {
+            background: #f8fafc;
+            border: 1px solid #e5eaf1;
+            border-radius: 10px;
+            padding: 19px;
+            overflow-wrap: anywhere;
+        }
+
+        .record h3 {
+            font-size: 15px;
+            color: #145b8c;
+            margin-bottom: 10px;
+        }
+
+        .record p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.8;
+        }
+
+        .record-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        /* EDIT PANEL */
+
+        .edit-panel {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #dce5ed;
+        }
+
+        .edit-panel.show {
+            display: block;
+        }
+
+        /* FORMS */
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 7px;
+            color: #334155;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-family: inherit;
+            font-size: 13px;
+            background: white;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #168c91;
+            box-shadow: 0 0 0 3px rgba(22, 140, 145, 0.1);
+        }
+
+        .add-form {
+            background: #f8fafc;
+            padding: 22px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .add-form h3 {
+            color: #145b8c;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        /* FINDINGS */
+
+        .findings {
+            padding-left: 20px;
+            color: #64748b;
+        }
+
+        .findings li {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .empty {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 9px;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        /* DISCLAIMER */
+
+        .disclaimer {
+            background: #fff7e8;
+            border: 1px solid #f3d8a5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+
+        .disclaimer h3 {
+            color: #925d13;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .disclaimer p {
+            color: #795b2b;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* BUTTONS */
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 11px 16px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.9;
+        }
+
+        .primary {
+            background: #145b8c;
+            color: white;
+        }
+
+        .secondary {
+            background: #eaf2f8;
+            color: #145b8c;
+        }
+
+        .danger {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        /* FLASH MESSAGES */
+
+        .flash {
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .flash.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .flash.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .flash.warning {
+            background: #fff7e8;
+            color: #925d13;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 35px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        @media print {
+            .navbar,
+            .actions,
+            footer,
+            .record-actions,
+            .edit-panel,
+            .add-form {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+            .section,
+            .intro,
+            .record {
+                break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                padding: 16px 5%;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .heading h1 {
+                font-size: 24px;
+            }
+
+            .records {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 18px;
+            }
+
+            .intro {
+                padding: 21px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        GeneGuard<span>AI</span>
+    </div>
+
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+</nav>
+
+<main class="container">
+
+    <!-- PAGE HEADING -->
+
+    <section class="heading">
+
+        <h1>Family Health Tree</h1>
+
+        <p>
+            View and manage your family health history information
+            across multiple generations.
+        </p>
+
+    </section>
+
+    <!-- FLASH MESSAGES -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% for category, message in messages %}
+
+            <div class="flash {{ category }}" role="alert">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+    <!-- INTRODUCTION -->
+
+    <section class="intro">
+
+        <h2>Understanding Your Family Health History</h2>
+
+        <p>
+            Maintain a record of health conditions reported among
+            your family members. Add, edit or remove records whenever
+            necessary. This information can help you discuss relevant
+            family history with a qualified healthcare professional.
+        </p>
+
+    </section>
+
+    <!-- FAMILY TREE -->
+
+    <section class="section">
+
+        <h2>Family History Overview</h2>
+
+        {% if history %}
+
+            <div class="tree">
+
+                <div class="tree-node current">
+
+                    <h3>Current User</h3>
+
+                    <p>Your family health history assessment</p>
+
+                </div>
+
+                <div class="connector"></div>
+
+                {% for person in history %}
+
+                    <div class="tree-node">
+
+                        <h3>
+                            {{ person.relationship | title }}
+                        </h3>
+
+                        <p>
+                            <strong>Condition:</strong>
+                            {{ person.condition }}
+                        </p>
+
+                        <p>
+                            <strong>Generation:</strong>
+                            {{ person.generation or 'Not specified' }}
+                        </p>
+
+                    </div>
+
+                    {% if not loop.last %}
+
+                        <div class="connector"></div>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty">
+
+                No family history records are available yet.
+
+                Add your first family member using the form below.
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    <!-- FAMILY RECORDS -->
+
+    <section class="section">
+
+        <h2>Recorded Family Health Information</h2>
+
+        {% if history %}
+
+            <div class="records">
+
+                {% for person in history %}
+
+                    <div class="record">
+
+                        <h3>
+                            {{ person.relationship | title }}
+                        </h3>
+
+                        <p>
+                            <strong>Health Condition:</strong>
+                            {{ person.condition }}
+                        </p>
+
+                        <p>
+                            <strong>Generation:</strong>
+                            {{ person.generation or 'Not specified' }}
+                        </p>
+
+                        <!-- EDIT AND DELETE -->
+
+                        <div class="record-actions">
+
+                            <button
+                                type="button"
+                                class="btn secondary"
+                                onclick="toggleEdit({{ loop.index0 }})">
+
+                                Edit
+
+                            </button>
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('delete_family_member', index=loop.index0) }}"
+                                onsubmit="return confirm('Are you sure you want to delete this family member?');">
+
+                                <button type="submit" class="btn danger">
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                        <!-- EDIT FORM -->
+
+                        <div
+                            class="edit-panel"
+                            id="edit-{{ loop.index0 }}">
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('edit_family_member', index=loop.index0) }}">
+
+                                <div class="form-group">
+
+                                    <label>Relationship</label>
+
+                                    <input
+                                        type="text"
+                                        name="relationship"
+                                        value="{{ person.relationship }}"
+                                        maxlength="60"
+                                        required>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label>Health Condition</label>
+
+                                    <input
+                                        type="text"
+                                        name="condition"
+                                        value="{{ person.condition }}"
+                                        maxlength="100"
+                                        required>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label>Generation</label>
+
+                                    <input
+                                        type="text"
+                                        name="generation"
+                                        value="{{ person.generation or '' }}"
+                                        maxlength="40">
+
+                                </div>
+
+                                <button
+                                    type="submit"
+                                    class="btn success">
+
+                                    Save Changes
+
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn secondary"
+                                    onclick="toggleEdit({{ loop.index0 }})">
+
+                                    Cancel
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty">
+                No family health records have been submitted yet.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    <!-- ADD FAMILY MEMBER -->
+
+    <section class="section">
+
+        <h2>Manage Family Members</h2>
+
+        <div class="add-form">
+
+            <h3>+ Add New Family Member</h3>
+
+            <form
+                method="POST"
+                action="{{ url_for('add_family_member') }}"
+                onsubmit="return validateFamilyForm(this)">
+
+                <div class="form-group">
+
+                    <label for="relationship">
+                        Relationship
+                    </label>
+
+                    <input
+                        type="text"
+                        id="relationship"
+                        name="relationship"
+                        placeholder="Example: Father, Mother, Grandfather"
+                        maxlength="60"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="condition">
+                        Health Condition
+                    </label>
+
+                    <input
+                        type="text"
+                        id="condition"
+                        name="condition"
+                        placeholder="Example: Diabetes, Hypertension, None reported"
+                        maxlength="100"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="generation">
+                        Generation
+                    </label>
+
+                    <input
+                        type="text"
+                        id="generation"
+                        name="generation"
+                        placeholder="Example: First Generation"
+                        maxlength="40">
+
+                </div>
+
+                <button type="submit" class="btn primary">
+                    Add Family Member
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <!-- ASSESSMENT FINDINGS -->
+
+    <section class="section">
+
+        <h2>Assessment Findings</h2>
+
+        {% if result %}
+
+            {% if result is mapping %}
+
+                <ul class="findings">
+
+                    {% for key, value in result.items() %}
+
+                        <li>
+
+                            <strong>
+                                {{ key | replace('_', ' ') | title }}:
+                            </strong>
+
+                            {% if value is string or value is number %}
+
+                                {{ value }}
+
+                            {% else %}
+
+                                {{ value | tojson }}
+
+                            {% endif %}
+
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <p>{{ result }}</p>
+
+            {% endif %}
+
+        {% else %}
+
+            <div class="empty">
+                No assessment findings are available yet.
+                Complete your assessment to view the available findings.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    <!-- MEDICAL DISCLAIMER -->
+
+    <section class="disclaimer">
+
+        <h3>Important Medical Disclaimer</h3>
+
+        <p>
+            This family health tree is based on information entered
+            by the user. It does not confirm genetic inheritance,
+            predict disease with certainty or diagnose any medical
+            condition. Consult a qualified healthcare professional
+            or genetic counsellor for interpretation and further guidance.
+        </p>
+
+    </section>
+
+    <!-- PAGE ACTIONS -->
+
+    <div class="actions">
+
+        <button
+            type="button"
+            class="btn primary"
+            onclick="window.print()">
+
+            Print / Save as PDF
+
+        </button>
+
+        <a
+            href="{{ url_for('family_history') }}"
+            class="btn secondary">
+
+            Complete Assessment
+
+        </a>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn secondary">
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+</main>
+
+<footer>
+    © 2026 GeneGuard AI. All rights reserved.
+</footer>
+
+<script>
+
+    // Open and close individual edit panels
+
+    function toggleEdit(index) {
+
+        const panel = document.getElementById("edit-" + index);
+
+        if (panel) {
+            panel.classList.toggle("show");
+        }
+
+    }
+
+
+    // Validate family member form
+
+    function validateFamilyForm(form) {
+
+        const relationship =
+            form.querySelector('[name="relationship"]').value.trim();
+
+        const condition =
+            form.querySelector('[name="condition"]').value.trim();
+
+        if (relationship.length < 2) {
+
+            alert("Please enter a valid family relationship.");
+
+            return false;
+
+        }
+
+        if (condition.length < 2) {
+
+            alert("Please enter a valid health condition.");
+
+            return false;
+
+        }
+
+        return true;
+
+    }
+
+</script>
+
+</body>
+</html>
+

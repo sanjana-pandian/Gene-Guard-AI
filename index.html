@@ -1,0 +1,553 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GeneGuard AI | Inherited Health Intelligence</title>
+
+    <meta name="description"
+          content="GeneGuard AI helps individuals understand inherited health risks through family history, carrier compatibility and preventive healthcare guidance.">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+
+    <header class="navbar">
+
+        <div class="nav-container">
+
+            <a href="{{ url_for('home') }}" class="logo">
+                <span class="logo-icon">G</span>
+                <span>GeneGuard<span class="logo-ai"> AI</span></span>
+            </a>
+
+            <nav class="nav-links" id="navLinks">
+
+                <a href="#home">Home</a>
+
+                <a href="#about">About</a>
+
+                <a href="#features">Features</a>
+
+                <a href="#how-it-works">How It Works</a>
+
+            </nav>
+
+            <div class="nav-buttons">
+
+                <a href="{{ url_for('login') }}"
+                   class="login-btn">
+                    Log in
+                </a>
+
+                <a href="{{ url_for('register') }}"
+                   class="primary-btn nav-register">
+                    Get Started
+                </a>
+
+            </div>
+
+            <button class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Toggle navigation">
+                ☰
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO SECTION -->
+
+    <main>
+
+        <section class="hero" id="home">
+
+            <div class="hero-container">
+
+                <div class="hero-content">
+
+                    <span class="eyebrow">
+                        <span class="status-dot"></span>
+                        INTELLIGENCE FOR PREVENTIVE HEALTHCARE
+                    </span>
+
+                    <h1>
+                        Understand Your
+                        <span>Genetic Health.</span>
+                        Shape Your Future.
+                    </h1>
+
+                    <p class="hero-description">
+                        Explore family health patterns, understand
+                        genetic carrier compatibility and discover
+                        preventive healthcare guidance through
+                        one intelligent platform.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <a href="{{ url_for('register') }}"
+                           class="primary-btn hero-btn">
+                            Get Started
+                            <span>→</span>
+                        </a>
+
+                        <a href="#features"
+                           class="secondary-btn">
+                            Explore Features
+                        </a>
+
+                    </div>
+
+                    <div class="hero-note">
+
+                        <span>✓</span>
+                        Privacy-conscious health awareness
+
+                        <span class="note-divider">|</span>
+
+                        <span>✓</span>
+                        Evidence-informed guidance
+
+                    </div>
+
+                </div>
+
+
+                <!-- HERO VISUAL -->
+
+                <div class="hero-visual">
+
+                    <div class="visual-glow"></div>
+
+                    <div class="dna-card">
+
+                        <div class="card-top">
+
+                            <div>
+                                <span class="small-label">
+                                    GENEGUARD AI
+                                </span>
+
+                                <h3>Health Intelligence</h3>
+                            </div>
+
+                            <span class="card-symbol">✦</span>
+
+                        </div>
+
+                        <div class="dna-illustration">
+
+                            <div class="dna-strand strand-one"></div>
+                            <div class="dna-strand strand-two"></div>
+
+                            <div class="dna-center">
+                                <span>DNA</span>
+                                <small>HEALTH</small>
+                            </div>
+
+                        </div>
+
+                        <div class="visual-bottom">
+
+                            <div class="visual-item">
+                                <span class="visual-number">01</span>
+                                <div>
+                                    <strong>Family History</strong>
+                                    <small>Understand patterns</small>
+                                </div>
+                            </div>
+
+                            <div class="visual-item">
+                                <span class="visual-number">02</span>
+                                <div>
+                                    <strong>Carrier Assessment</strong>
+                                    <small>Compare confirmed results</small>
+                                </div>
+                            </div>
+
+                            <div class="visual-item">
+                                <span class="visual-number">03</span>
+                                <div>
+                                    <strong>Prevention</strong>
+                                    <small>Explore next steps</small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="floating-label label-top">
+                        <span class="floating-icon">⌬</span>
+                        <span>
+                            <strong>Genetic Insights</strong>
+                            <small>Understand your history</small>
+                        </span>
+                    </div>
+
+                    <div class="floating-label label-bottom">
+                        <span class="floating-icon">♡</span>
+                        <span>
+                            <strong>Preventive Care</strong>
+                            <small>Make informed decisions</small>
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TRUST STRIP -->
+
+        <section class="trust-section">
+
+            <div class="trust-container">
+
+                <div class="trust-heading">
+                    BUILT AROUND THREE CORE PILLARS
+                </div>
+
+                <div class="trust-items">
+
+                    <span>Family Health Intelligence</span>
+
+                    <span>Genetic Compatibility</span>
+
+                    <span>Preventive Healthcare</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT SECTION -->
+
+        <section class="about-section" id="about">
+
+            <div class="section-container">
+
+                <div class="section-heading">
+
+                    <span class="section-tag">
+                        ABOUT GENEGUARD AI
+                    </span>
+
+                    <h2>
+                        Health awareness begins
+                        <span>with understanding.</span>
+                    </h2>
+
+                    <p>
+                        Family medical history and genetic information
+                        can provide important insights into inherited
+                        health conditions. GeneGuard AI brings these
+                        insights together in one accessible platform.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES SECTION -->
+
+        <section class="features-section" id="features">
+
+            <div class="section-container">
+
+                <div class="section-heading">
+
+                    <span class="section-tag">
+                        OUR CAPABILITIES
+                    </span>
+
+                    <h2>
+                        Three modules.
+                        <span>One health platform.</span>
+                    </h2>
+
+                    <p>
+                        Explore the tools designed to support
+                        inherited disease awareness and preventive care.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-grid">
+
+                    <!-- FEATURE 1 -->
+
+                    <article class="feature-card">
+
+                        <div class="feature-icon">
+                            ♧
+                        </div>
+
+                        <span class="feature-number">
+                            MODULE 01
+                        </span>
+
+                        <h3>Family Health Intelligence</h3>
+
+                        <p>
+                            Record family medical history across
+                            generations and identify patterns
+                            that may need further medical evaluation.
+                        </p>
+
+                        <a href="{{ url_for('register') }}"
+                           class="feature-link">
+                            Explore Module <span>→</span>
+                        </a>
+
+                    </article>
+
+
+                    <!-- FEATURE 2 -->
+
+                    <article class="feature-card featured-card">
+
+                        <div class="feature-icon">
+                            ◈
+                        </div>
+
+                        <span class="feature-number">
+                            MODULE 02
+                        </span>
+
+                        <h3>Genetic Carrier Compatibility</h3>
+
+                        <p>
+                            Compare confirmed carrier test results
+                            for selected inherited conditions and
+                            understand potential reproductive risks.
+                        </p>
+
+                        <a href="{{ url_for('register') }}"
+                           class="feature-link">
+                            Explore Module <span>→</span>
+                        </a>
+
+                    </article>
+
+
+                    <!-- FEATURE 3 -->
+
+                    <article class="feature-card">
+
+                        <div class="feature-icon">
+                            ♡
+                        </div>
+
+                        <span class="feature-number">
+                            MODULE 03
+                        </span>
+
+                        <h3>Preventive Healthcare</h3>
+
+                        <p>
+                            Explore personalized health awareness,
+                            appropriate screening discussions and
+                            professional consultation guidance.
+                        </p>
+
+                        <a href="{{ url_for('register') }}"
+                           class="feature-link">
+                            Explore Module <span>→</span>
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+
+        <section class="process-section" id="how-it-works">
+
+            <div class="section-container">
+
+                <div class="section-heading">
+
+                    <span class="section-tag">
+                        SIMPLE PROCESS
+                    </span>
+
+                    <h2>
+                        Your journey towards
+                        <span>better awareness.</span>
+                    </h2>
+
+                </div>
+
+                <div class="process-grid">
+
+                    <div class="process-card">
+
+                        <span class="process-number">01</span>
+
+                        <h3>Create Your Profile</h3>
+
+                        <p>
+                            Register and access your personal
+                            GeneGuard AI dashboard.
+                        </p>
+
+                    </div>
+
+                    <div class="process-card">
+
+                        <span class="process-number">02</span>
+
+                        <h3>Enter Health Information</h3>
+
+                        <p>
+                            Provide relevant family history and
+                            voluntarily supplied confirmed test results.
+                        </p>
+
+                    </div>
+
+                    <div class="process-card">
+
+                        <span class="process-number">03</span>
+
+                        <h3>Explore Your Report</h3>
+
+                        <p>
+                            Review identified indicators and
+                            appropriate preventive next steps.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CTA SECTION -->
+
+        <section class="cta-section">
+
+            <div class="cta-container">
+
+                <span class="section-tag">
+                    START YOUR JOURNEY
+                </span>
+
+                <h2>
+                    Knowledge today.
+                    <span>Healthier decisions tomorrow.</span>
+                </h2>
+
+                <p>
+                    Take the first step towards understanding
+                    your family's health history.
+                </p>
+
+                <a href="{{ url_for('register') }}"
+                   class="cta-button">
+                    Create Your Account <span>→</span>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div class="footer-brand">
+
+                <a href="{{ url_for('home') }}"
+                   class="logo footer-logo">
+
+                    <span class="logo-icon">G</span>
+
+                    <span>
+                        GeneGuard<span class="logo-ai"> AI</span>
+                    </span>
+
+                </a>
+
+                <p>
+                    Understanding inherited health risks.
+                    Encouraging informed healthcare decisions.
+                </p>
+
+            </div>
+
+            <div class="footer-links">
+
+                <a href="#home">Home</a>
+
+                <a href="#about">About</a>
+
+                <a href="#features">Features</a>
+
+                <a href="{{ url_for('register') }}">Register</a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>
+                © <span id="year"></span> GeneGuard AI.
+                All rights reserved.
+            </p>
+
+            <p>
+                Educational health awareness platform.
+                Not a substitute for professional medical advice.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="{{ url_for('static', filename='js/script.js') }}">
+    </script>
+
+</body>
+
+</html>
